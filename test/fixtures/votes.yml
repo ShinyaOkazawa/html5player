@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cnt: 1
+  content_id: 1
+  col_id: 1
+
+two:
+  cnt: 1
+  content_id: 1
+  col_id: 1
