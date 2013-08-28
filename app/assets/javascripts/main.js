@@ -65,7 +65,6 @@ window.onload = function(){
 		var newtime = mouseX * player.duration / seekbar.offsetWidth;
 		player.currentTime = newtime;
 		var size = player.currentTime * (seekbar.offsetWidth - slider.offsetWidth) / player.duration;
-		console.log(mouseX);
 		progressbar.style.width = size + slider.offsetWidth + 'px';
 		dragSlider();
 	};
@@ -228,96 +227,109 @@ window.onload = function(){
 
 	setTimeout(afterLoaded, 1000);
 
-
 	// initial render chart
-		var good = document.getElementById('good');
-		var xlabel = [];
-		var nmc = 20; // number of columns
-		var lec = player.duration.toFixed() / nmc // label each column
-		//lec = Math.round(lec);
+	var good = document.getElementById('good');
 
-		for(var i=1; i <= nmc; i++){
-			xlabel[i-1] = Math.floor(lec * i - lec) + '-' + Math.floor(lec * i);
-		}
-		
-		var dps = [];
-		for(var i=0; i<nmc; i++){
-			dps[i] = {label: xlabel[i], y: 0};
-		};
-		var totalnum = "total vote: 0";
+    $.ajax({
+    	type: "GET",
+    	url: "/votes.json",
+    	dataType: "json",
+    	data:{
+ 
+   		},
+   		success: function(data){
 
-		var chart = new CanvasJS.Chart("chartContainer",{
-		
-			theme: "theme2",
-			title:{ 
-				text: "scene voting"
-			},
-			axisX: {
-				interval:1,
-				labelAngle: 90,
-				labelFontSize: 11
-			},
-			axisY: {				
-				minimum: 0
-			},			
-			legend:{
-				verticalAlign: "top",
-				horizontalAlign: "center",
-				fontSize: 18
-			},
-			data: [{
-				type: "column",
-				showInLegend: true,
-				legendMarkerType: "none",				
-				legendText: totalnum,
-				//indexLabel: "{y}",
-				dataPoints: dps
-			}]
-		});
+   			var sum = 0;
+   			for(var i=0; i < data.length; i++){
+   				//data[i].cnt;
+   				sum += data[i].cnt;
+   			}
+   			console.log(sum);
+   			//console.log(data[0].cnt);
+   			var xlabel = [];
+			var nmc = 20; // number of columns
+			var lec = player.duration.toFixed() / nmc // label each column
+			//lec = Math.round(lec);
 
-		// renders initial chart
-		chart.render();
-
-	//good.addEventListener('click', updateChart, false);
-  	$("#good").on("click", function(event) {
-
-		//var sum = 0; //initial sum 
-		//var updateInterval = 1000;  // milliseconds
-
-		var ct = player.currentTime.toFixed();
-		var dataPointIndex;
-		var x;
-
-			for(var i=1; i<=nmc; i++){
-				if(ct <= lec*i){
-					dataPointIndex = i-1;
-					break;
-				}
+			for(var i=1; i <= nmc; i++){
+				xlabel[i-1] = Math.floor(lec * i - lec) + '-' + Math.floor(lec * i);
 			}
-		//dps[dataPointIndex].y++;
+		
+			var dps = [];
+			for(var i=0; i<nmc; i++){
+				dps[i] = {label: xlabel[i], y: data[i].cnt};
+			};
 
-		// updating legend text. 
-		//sum++;
-		totalnum = "total vote: ";// + sum;			
-		chart.options.data[0].legendText = totalnum;
+			var totalnum = "total vote: " + sum;
 
-    	var vote_id;
-    	// vote_id = $(this).attr('id');
-    	vote_id = dataPointIndex + 1;
+			var chart = new CanvasJS.Chart("chartContainer",{
+		
+				theme: "theme2",
+				title:{ 
+					text: "scene voting"
+				},
+				axisX: {
+					interval:1,
+					labelAngle: 90,
+					labelFontSize: 11
+				},
+				axisY: {				
+					minimum: 0
+				},			
+				legend:{
+					verticalAlign: "top",
+					horizontalAlign: "center",
+					fontSize: 18
+				},
+				data: [{
+					type: "column",
+					showInLegend: true,
+					legendMarkerType: "none",				
+					legendText: totalnum,
+					//indexLabel: "{y}",
+					dataPoints: dps
+				}]
+			});
 
-    	$.ajax({
-     		type: "POST",
-     		url: "/votes/" + vote_id + "/like.json",
-     		data: {
-        		_method: "PATCH"
-     		}
-    	}).done(function(msg) {
-    		//var current_cnt;
-    		//current_cnt = parseInt($("#like-" + vote_id + "-cnt").text());
-    		//return $("#like-" + vote_id + "-cnt").text(current_cnt + 1);
-    		dps[dataPointIndex].y++;
-    	});
-    	chart.render();
-  	});
+			// renders initial chart
+			chart.render();
+
+			//good.addEventListener('click', updateChart, false);
+  			$("#good").on("click", function(event) {
+
+				var ct = player.currentTime.toFixed();
+				var dataPointIndex;
+				var x;
+
+				for(var i=1; i<=nmc; i++){
+					if(ct <= lec*i){
+						dataPointIndex = i-1;
+						break;
+					}
+				}
+
+				// updating legend text. 
+				totalnum = "total vote: " + ;			
+				chart.options.data[0].legendText = totalnum;
+
+    			var vote_id;
+    			vote_id = dataPointIndex + 1;
+
+    			$.ajax({
+     				type: "POST",
+     				url: "/votes/" + vote_id + "/like.json",
+     				data: {
+        				_method: "PATCH"
+     				}
+    			}).done(function(msg) {
+    				dps[dataPointIndex].y++;
+    				chart.render();
+    			});
+  			});
+   		},
+   		error:function(){
+   			console.log('bad');
+   		}
+   	});
 
 }
