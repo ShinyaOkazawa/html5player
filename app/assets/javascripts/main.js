@@ -221,6 +221,13 @@ window.onload = function(){
 	document.addEventListener('fullscreenchange', updateProgress, false);
 	player.addEventListener('timeupdate', updateBuffer, false);
 
+	// update chart
+	function afterLoaded(){
+		durationDisplay();
+	}
+
+	setTimeout(afterLoaded, 1000);
+
 
 	// initial render chart
 		var good = document.getElementById('good');
@@ -271,12 +278,15 @@ window.onload = function(){
 		// renders initial chart
 		chart.render();
 
-		var sum = 0; //initial sum 
+	//good.addEventListener('click', updateChart, false);
+  	$("#good").on("click", function(event) {
+
+		//var sum = 0; //initial sum 
 		//var updateInterval = 1000;  // milliseconds
-		function updateChart() {
-			var ct = player.currentTime.toFixed();
-			var dataPointIndex;
-			var x;
+
+		var ct = player.currentTime.toFixed();
+		var dataPointIndex;
+		var x;
 
 			for(var i=1; i<=nmc; i++){
 				if(ct <= lec*i){
@@ -284,26 +294,30 @@ window.onload = function(){
 					break;
 				}
 			}
-			dps[dataPointIndex].y++;
+		//dps[dataPointIndex].y++;
 
-			// updating legend text. 
-			sum++;
-			totalnum = "total vote: " + sum;			
-			chart.options.data[0].legendText = totalnum;	
+		// updating legend text. 
+		//sum++;
+		totalnum = "total vote: ";// + sum;			
+		chart.options.data[0].legendText = totalnum;
 
-			chart.render();
+    	var vote_id;
+    	// vote_id = $(this).attr('id');
+    	vote_id = dataPointIndex + 1;
 
-		};
-
-		
-	// update chart
-	function afterLoaded(){
-		durationDisplay();
-	}
-
-	setTimeout(afterLoaded, 1000);
-
-	good.addEventListener('click', updateChart, false);
-
+    	$.ajax({
+     		type: "POST",
+     		url: "/votes/" + vote_id + "/like.json",
+     		data: {
+        		_method: "PATCH"
+     		}
+    	}).done(function(msg) {
+    		//var current_cnt;
+    		//current_cnt = parseInt($("#like-" + vote_id + "-cnt").text());
+    		//return $("#like-" + vote_id + "-cnt").text(current_cnt + 1);
+    		dps[dataPointIndex].y++;
+    	});
+    	chart.render();
+  	});
 
 }

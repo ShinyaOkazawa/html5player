@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-  before_action :set_vote, only: [:show, :edit, :update, :destroy]
+  before_action :set_vote, only: [:show, :edit, :update, :destroy, :like]
 
   # GET /votes
   # GET /votes.json
@@ -46,6 +46,16 @@ class VotesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
+        format.json { render json: @vote.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def like 
+    respond_to do |format|
+      if @vote.increment!(:cnt)
+        format.json { head :no_content }
+      else
         format.json { render json: @vote.errors, status: :unprocessable_entity }
       end
     end
