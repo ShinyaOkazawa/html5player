@@ -309,7 +309,7 @@ window.onload = function(){
 				}
 
 				// updating legend text. 
-				totalnum = "total vote: " + ;			
+				totalnum = "total vote: " + ++sum;			
 				chart.options.data[0].legendText = totalnum;
 
     			var vote_id;
