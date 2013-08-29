@@ -134,11 +134,19 @@ window.onload = function(){
 
 	// make volumebar clickable
 	function clickableVol(e){
-		var s = player_wrap.offsetLeft + volumebar.offsetLeft;
-		var x = e.clientX;
-		var w = volumebar.offsetWidth - v_slider.offsetWidth;
-		var vol = (x - s) / w;
-		
+		var isFullScreen = document.fullScreen ||
+			document.mozFullScreen || document.webkitIsFullScreen;
+		if(isFullScreen){ // here needs to be fixed for other browser
+			var s = player.offsetLeft + volumebar.offsetLeft;
+			var mouseX = e.clientX - player.offsetLeft - volumebar.offsetLeft;				
+		} else {
+			var s = player_wrap.offsetLeft + volumebar.offsetLeft;
+			var mouseX = e.clientX - player_wrap.offsetLeft - volumebar.offsetLeft;				
+		}
+			var x = e.clientX;
+			var w = volumebar.offsetWidth - v_slider.offsetWidth;
+			var vol = (x - s) / w;
+
 		changeVol();
 		if(vol < 0){
 			player.volume = vol = 0;
@@ -155,7 +163,7 @@ window.onload = function(){
 			} else if (vol > 0.98){
 				player.volume = vol = 1;
 			};
-			var mouseX = e.clientX - player_wrap.offsetLeft - volumebar.offsetLeft;				
+
 			v_slider.style.left = mouseX + 'px';
 			player.volume = vol;
 		};
@@ -207,6 +215,15 @@ window.onload = function(){
   		}
 	};
 
+	function changeFullscreenIcon(){
+		var isFullScreen = document.fullScreen ||
+			document.mozFullScreen || document.webkitIsFullScreen;
+		if(isFullScreen){ // here needs to be fixed for other browser
+			fullscreen_btn.style.background = 'url(assets/exitfullscreen.png)';
+		} else {
+			fullscreen_btn.style.background = 'url(assets/fullscreen.png)';
+		}
+	}
 	player.addEventListener('click', playOrPause, false);
 	play_btn.addEventListener('click', playOrPause, false);
 	player.addEventListener('timeupdate', updateProgress, false);
@@ -214,7 +231,10 @@ window.onload = function(){
 	mute_btn.addEventListener('click', mute, false);
 	volumebar.addEventListener('mousedown', clickableVol, false);
 	player.addEventListener('timeupdate', currentTimeDisplay, false);
-	fullscreen_btn.addEventListener('click', fullscreen, false);	
+	fullscreen_btn.addEventListener('click', fullscreen, false);
+	document.addEventListener('webkitfullscreenchange', changeFullscreenIcon, false);
+	document.addEventListener('mozfullscreenchange', changeFullscreenIcon, false);
+	document.addEventListener('fullscreenchange', changeFullscreenIcon, false);
 	document.addEventListener('webkitfullscreenchange', updateProgress, false);
 	document.addEventListener('mozfullscreenchange', updateProgress, false);
 	document.addEventListener('fullscreenchange', updateProgress, false);
@@ -227,7 +247,7 @@ window.onload = function(){
 
 	setTimeout(afterLoaded, 1000);
 
-	// initial render chart
+	// render chart
 	var good = document.getElementById('good');
 
     $.ajax({
@@ -241,15 +261,11 @@ window.onload = function(){
 
    			var sum = 0;
    			for(var i=0; i < data.length; i++){
-   				//data[i].cnt;
    				sum += data[i].cnt;
    			}
-   			console.log(sum);
-   			//console.log(data[0].cnt);
    			var xlabel = [];
 			var nmc = 20; // number of columns
 			var lec = player.duration.toFixed() / nmc // label each column
-			//lec = Math.round(lec);
 
 			for(var i=1; i <= nmc; i++){
 				xlabel[i-1] = Math.floor(lec * i - lec) + '-' + Math.floor(lec * i);
@@ -294,7 +310,7 @@ window.onload = function(){
 			// renders initial chart
 			chart.render();
 
-			//good.addEventListener('click', updateChart, false);
+			// update chart per click
   			$("#good").on("click", function(event) {
 
 				var ct = player.currentTime.toFixed();
@@ -328,8 +344,8 @@ window.onload = function(){
   			});
    		},
    		error:function(){
-   			console.log('bad');
+   			console.log('ajax is not working');
    		}
    	});
-
+	
 }
