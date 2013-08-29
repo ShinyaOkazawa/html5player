@@ -5,4 +5,5 @@ class WelcomesController < ApplicationController
   def index
     @votes = Vote.where(content_id: 1)
   end
+
 end

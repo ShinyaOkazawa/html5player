@@ -4,21 +4,39 @@ html, body{
 	font-family: helvetica;
 }
 body{
-	background: #eee;
+	background: #666;
+}
+#back_one{
+	//height: 1000px;
+	background: #489CE7;
+	-webkit-transform: rotate(45deg);
+	border-bottom: solid 10px #eee;
+	border-right: solid 10px #eee;
 }
 #wrapper{
 	width: 640px;
 	margin: auto;
+	-webkit-transform: rotate(-45deg);
 }
 header{
+	width:100%;
+	height: 50px;
+	background: url(../assets/header.png) 10px 10px no-repeat;
+}
+header h1{
+	line-height: 1.5em;
 	letter-spacing: 0.1em;
-	color:;
+	font-size: 32px;
+	color: #fff;
+	margin-left:50px;
+	font-family: helvetica;
 }
 #player_wrap{
 	margin:10px auto 0px;
 	width:640px;
 	height: 385px;
 	position: relative;
+	border: 2px solid #fff;
 }
 .clickable{
 	cursor: pointer;
@@ -191,4 +209,5 @@ header{
 #chartContainer{
 	clear: both;
 	margin: auto;
+	border: 2px solid #fff;
 }
