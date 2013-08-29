@@ -276,13 +276,13 @@ window.onload = function(){
 				dps[i] = {label: xlabel[i], y: data[i].cnt};
 			};
 
-			var totalnum = "total vote: " + sum;
+			var totalnum = "Total Vote: " + sum;
 
 			var chart = new CanvasJS.Chart("chartContainer",{
 		
-				theme: "theme2",
+				theme: "theme1",
 				title:{ 
-					text: "scene voting"
+					text: "SCENE VOTES"
 				},
 				axisX: {
 					interval:1,
@@ -295,7 +295,8 @@ window.onload = function(){
 				legend:{
 					verticalAlign: "top",
 					horizontalAlign: "center",
-					fontSize: 18
+					fontSize: 16,
+					fontColor: "gray"
 				},
 				data: [{
 					type: "column",
@@ -325,7 +326,7 @@ window.onload = function(){
 				}
 
 				// updating legend text. 
-				totalnum = "total vote: " + ++sum;			
+				totalnum = "Total Vote: " + ++sum;			
 				chart.options.data[0].legendText = totalnum;
 
     			var vote_id;

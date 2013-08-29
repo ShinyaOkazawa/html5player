@@ -1,35 +1,39 @@
 <div id="wrapper">
-<div id="player_wrap">
-  <video id="player" width="640px">
-    <source src="http://p-dlv.realplay.com/channel/moviecollection/4a/38218.mp4?authToken=1377825312_b877215a4abd2600f03ee59dc5f8f89d" type="video/mp4">
-  </video>
-  <div id="seekbar">
-    <div id="bufferingbar"></div>
-    <div id="progressbar"></div>
-    <div id="slider" class="clickable"></div>
-  </div><!-- seekbar END -->
-  <div id="tools">
-    <div id="play_btn" class="clickable"><div id="play_btn_image"></div></div>
-      <div id="mute_btn" class="clickable">
-        <div id="mute_btn_image"></div>
+  <header>
+    <h1>HTML5 VIDEO PLAYER</h1>
+  </header>
+  
+  <div id="player_wrap">
+    <video id="player" width="640px">
+      <source src="http://p-dlv.realplay.com/channel/moviecollection/4a/38218.mp4?authToken=1377825312_b877215a4abd2600f03ee59dc5f8f89d" type="video/mp4">
+    </video>
+    <div id="seekbar">
+      <div id="bufferingbar"></div>
+      <div id="progressbar"></div>
+      <div id="slider" class="clickable"></div>
+    </div><!-- seekbar END -->
+    <div id="tools">
+      <div id="play_btn" class="clickable"><div id="play_btn_image"></div></div>
+        <div id="mute_btn" class="clickable">
+          <div id="mute_btn_image"></div>
+        </div>
+      <div id="volume_wrap">
+        <div id="volumebar">
+          <div id="v_progressbar"></div>
+          <div id="v_slider" class="clickable"></div>
+        </div><!-- volumebar END-->
+      </div><!-- volume_wrap END -->
+      <div id="time_wrap">
+        <div id="current_disp">00:00</div>
+        <div id="duration_disp">00:00</div>
+      </div><!-- time_wrap END -->
+      <div id="fullscreen_btn_wrap" class="clickable">
+        <div id="fullscreen_btn"></div>
       </div>
-    <div id="volume_wrap">
-      <div id="volumebar">
-        <div id="v_progressbar"></div>
-        <div id="v_slider" class="clickable"></div>
-      </div>
-    </div>
-    <div id="time_wrap">
-      <div id="current_disp">00:00</div>
-      <div id="duration_disp">00:00</div>
-    </div>
-    <div id="fullscreen_btn_wrap" class="clickable">
-      <div id="fullscreen_btn"></div>
-    </div>
-    <div id="good" class="clickable"><div id="panel"></div></div>
-  </div><!-- tools END -->
-  <div id="clear_left"></div>
-</div><!-- player_wrap END-->
-<div id="chartContainer" style="height: 300px; width: 640px">
-</div>
+      <div id="good" class="clickable"><div id="panel"><img src="assets/like.png"></div></div>
+    </div><!-- tools END -->
+    <div id="clear_left"></div>
+  </div><!-- player_wrap END-->
+  <div id="chartContainer" style="height: 300px; width: 640px">
+  </div>
 </div><!-- wrapper END -->
