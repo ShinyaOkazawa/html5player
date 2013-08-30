@@ -101,10 +101,10 @@ window.onload = function(){
 	function mute(){
 		if(player.muted == false){
 			player.muted = true;
-			mute_btn_image.style.background = 'url(assets/speaker_off.png)';
+			mute_btn_image.src = 'assets/speaker_off.png';
 		} else {
 			player.muted = false;
-			mute_btn_image.style.background = 'url(assets/speaker_on.png)';
+			mute_btn_image.src = 'assets/speaker_on.png';
 		};
 	};
 
@@ -136,12 +136,12 @@ window.onload = function(){
 	function clickableVol(e){
 		var isFullScreen = document.fullScreen ||
 			document.mozFullScreen || document.webkitIsFullScreen;
-		if(isFullScreen){ // here needs to be fixed for other browser
+		if(isFullScreen){
 			var s = player.offsetLeft + volumebar.offsetLeft;
 			var mouseX = e.clientX - player.offsetLeft - volumebar.offsetLeft;				
 		} else {
 			var s = player_wrap.offsetLeft + volumebar.offsetLeft;
-			var mouseX = e.clientX - player_wrap.offsetLeft - volumebar.offsetLeft;				
+			var mouseX = e.clientX - player_wrap.offsetLeft - volumebar.offsetLeft;			
 		}
 			var x = e.clientX;
 			var w = volumebar.offsetWidth - v_slider.offsetWidth;
@@ -151,13 +151,13 @@ window.onload = function(){
 		if(vol < 0){
 			player.volume = vol = 0;
 			v_slider.style.left = 0;
-			mute_btn_image.style.background = 'url(assets/speaker_off.png)';
+			mute_btn_image.src = 'assets/speaker_off.png';
 		} else if (vol > 1){
 			player.volume = vol = 1;
 			v_slider.style.left = w + 'px';
 		} else {
 			// complementary control of volume value when the value can't reflect completely 0 and 1
-			mute_btn_image.style.background = 'url(assets/speaker_on.png)';
+			mute_btn_image.src = 'assets/speaker_on.png';
 			if(vol < 0.02){
 				player.volume = vol = 0;
 			} else if (vol > 0.98){
@@ -189,15 +189,15 @@ window.onload = function(){
 	function fullscreen() {
 		var isFullScreen = document.fullScreen ||
 			document.mozFullScreen || document.webkitIsFullScreen;
-		if(isFullScreen){ // here needs to be fixed for other browser
+		if(isFullScreen){ 
 			if (document.exitFullscreen) {
     			document.exitFullscreen();
     			fullscreen_btn.style.background = 'url(assets/fullscreen.png)';
   			} else if (document.mozExitFullScreen) {
-    			document.mozExitFullScreen(); // Firefox
+    			document.mozExitFullScreen(); 
     			fullscreen_btn.style.background = 'url(assets/fullscreen.png)';
   			} else if (document.webkitExitFullscreen) {
-    			document.webkitExitFullscreen(); // Chrome and Safari
+    			document.webkitExitFullscreen(); 
     			fullscreen_btn.style.background = 'url(assets/fullscreen.png)';
     			bufferingbar.style.width =  0+ 'px';
   			}
@@ -206,10 +206,10 @@ window.onload = function(){
     			player_wrap.requestFullscreen();
     			fullscreen_btn.style.background = 'url(assets/exitfullscreen.png)';
   			} else if (player_wrap.mozRequestFullScreen) {
-    			player_wrap.mozRequestFullScreen(); // Firefox
+    			player_wrap.mozRequestFullScreen(); 
     			fullscreen_btn.style.background = 'url(assets/exitfullscreen.png)';
   			} else if (player_wrap.webkitRequestFullscreen) {
-    			player_wrap.webkitRequestFullscreen(); // Chrome and Safari
+    			player_wrap.webkitRequestFullscreen(); 
     			fullscreen_btn.style.background = 'url(assets/exitfullscreen.png)';
   			}
   		}
@@ -218,7 +218,7 @@ window.onload = function(){
 	function changeFullscreenIcon(){
 		var isFullScreen = document.fullScreen ||
 			document.mozFullScreen || document.webkitIsFullScreen;
-		if(isFullScreen){ // here needs to be fixed for other browser
+		if(isFullScreen){ 
 			fullscreen_btn.style.background = 'url(assets/exitfullscreen.png)';
 		} else {
 			fullscreen_btn.style.background = 'url(assets/fullscreen.png)';

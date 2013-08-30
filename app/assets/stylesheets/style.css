@@ -10,6 +10,7 @@ body{
 	//height: 1000px;
 	background: #489CE7;
 	-webkit-transform: rotate(45deg);
+	border-top: solid 5px #eee;
 	border-bottom: solid 10px #eee;
 	border-right: solid 10px #eee;
 }
@@ -98,13 +99,13 @@ header h1{
 	height: 25px;
 	float: left;
 }
-#mute_btn_image{
+#mute_btn > img{
+	display: block;
 	margin: auto;
 	width:10px;
 	height: 10px;
 	top:7px;
 	position: relative;
-	background: url(../assets/speaker_on.png) no-repeat;
 }
 #volumebar{
 	margin-left: 10px;
@@ -182,11 +183,11 @@ header h1{
 	clear: left;
 }
 
-#player_wrap:-webkit-full-screen{ width: 100%; height: 100%; background: #000;}
-#player_wrap:-moz-full-screen{ width: 100%; height: 100%; background: #000;}
-#player_wrap:-ms-full-screen{ width: 100%; height: 100%; background: #000;}
-#player_wrap:-o-full-screen{ width: 100%; height: 100%; background: #000;}
-#player_wrap:full-screen{ width: 100%; height: 100%; background: #000;}
+#player_wrap:-webkit-full-screen{ width: 100%; height: 100%; background: #000; border:none;}
+#player_wrap:-moz-full-screen{ width: 100%; height: 100%; background: #000; border:none; }
+#player_wrap:-ms-full-screen{ width: 100%; height: 100%; background: #000; border:none; }
+#player_wrap:-o-full-screen{ width: 100%; height: 100%; background: #000; border:none; }
+#player_wrap:full-screen{ width: 100%; height: 100%; background: #000; border:none; }
 
 #player_wrap:-webkit-full-screen #player{ width: 100%; }
 #player_wrap:-moz-full-screen #player{ width: 100%; }
